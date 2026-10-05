@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "If you use this design, data or code, please cite it as below."
+title: "One switch, three Wi-Fi bands: a 1-bit polarisation-rotating RIS cell (simulation study)"
+authors:
+  - name: "Moki & Julio"
+version: "1.0.0"
+date-released: "2026-10-05"
+license:
+  - CC-BY-4.0
+  - MIT
+repository-code: "https://github.com/Hashirama1337s/moki-julio-wifi-ris-cell"
+keywords: [reconfigurable intelligent surface, RIS, reflectarray, Wi-Fi 6E, Wi-Fi 7, PIN diode, polarisation rotation, metasurface, Palace FEM]
+# doi: to be added when the Zenodo record is created

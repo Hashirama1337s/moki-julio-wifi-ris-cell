@@ -1,0 +1,4 @@
+# analysis side (reproduce.py, all scripts except the two solver drivers); tested with Python 3.11.9
+numpy>=2.4
+matplotlib>=3.11
+# solver side (palace_mp_pol.py, super_mp.py; Linux / WSL, tested with Python 3.12.3): numpy 2.5.3, gmsh 4.15.2, Palace 0.18.1 (Spack)
