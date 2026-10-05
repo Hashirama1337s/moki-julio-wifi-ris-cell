@@ -1,5 +1,7 @@
 # One switch, three Wi-Fi bands: a 1-bit polarisation-rotating RIS cell (simulation study)
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23165406.svg)](https://doi.org/10.5281/zenodo.23165406)
+
 **Status: simulation only (Palace 0.18.1 full-wave FEM + exact network algebra). Nothing has been built or measured.** Release 1.0.0.
 
 ## In plain words
@@ -318,4 +320,4 @@ how to rebuild the vendor tables (vendor files are not redistributed).
 ## License and citation
 
 Copyright (c) 2026 Moki & Julio. Design, text, figures and data: CC BY 4.0 (LICENSE; summary in LICENSE-docs-data.md). Code: MIT (LICENSE-CODE).
-Please cite via CITATION.cff (the DOI is on the Zenodo record for this repository).
+Please cite via CITATION.cff: DOI [10.5281/zenodo.23165406](https://doi.org/10.5281/zenodo.23165406) (all versions; release 1.0.0 is 10.5281/zenodo.23165407).

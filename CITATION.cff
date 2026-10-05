@@ -10,4 +10,4 @@ license:
   - MIT
 repository-code: "https://github.com/Hashirama1337s/moki-julio-wifi-ris-cell"
 keywords: [reconfigurable intelligent surface, RIS, reflectarray, Wi-Fi 6E, Wi-Fi 7, PIN diode, polarisation rotation, metasurface, Palace FEM]
-# doi: to be added when the Zenodo record is created
+doi: "10.5281/zenodo.23165406"
