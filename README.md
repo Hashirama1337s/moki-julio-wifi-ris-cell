@@ -321,3 +321,12 @@ how to rebuild the vendor tables (vendor files are not redistributed).
 
 Copyright (c) 2026 Moki & Julio. Design, text, figures and data: CC BY 4.0 (LICENSE; summary in LICENSE-docs-data.md). Code: MIT (LICENSE-CODE).
 Please cite via CITATION.cff: DOI [10.5281/zenodo.23165406](https://doi.org/10.5281/zenodo.23165406) (all versions; release 1.0.0 is 10.5281/zenodo.23165407).
+
+## Other work by Moki & Julio
+
+- [rikitake-chaos](https://github.com/Hashirama1337s/rikitake-chaos): Computer-assisted proof that Rikitake's two-disc dynamo (1958) is chaotic ([doi:10.5281/zenodo.23041182](https://doi.org/10.5281/zenodo.23041182))
+- [szilassi-12](https://github.com/Hashirama1337s/szilassi-12): No symmetric 12-face Szilassi polyhedron: a computer-assisted proof with DRAT certificates ([doi:10.5281/zenodo.23003257](https://doi.org/10.5281/zenodo.23003257))
+- [moki-julio-circle-packing](https://github.com/Hashirama1337s/moki-julio-circle-packing): 6,071 new best-known packings of equal circles, spheres and hyperspheres, each verified by two independent exact checkers ([doi:10.5281/zenodo.22981305](https://doi.org/10.5281/zenodo.22981305))
+- [kinect-v1-depth-levels](https://github.com/Hashirama1337s/kinect-v1-depth-levels): The Xbox 360 Kinect measured as an instrument: the depth lattice, three noise populations, drift and a capability map
+
+All projects: [github.com/Hashirama1337s](https://github.com/Hashirama1337s)
