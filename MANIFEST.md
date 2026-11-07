@@ -15,7 +15,7 @@
 | `super_mp.py`, `super_an.py`, `sup_energy.py` | 2-cell supercell (AA / BB / AB codes): build + run, network closure with realistic parts, energy accounting and steered-beam efficiency |
 | `vendor_chip.py`, `coilcraft_to_csv.py` | measured Coilcraft inductor model; Touchstone .s2p -> series-impedance table |
 | `bias_real.py` | bias posts with realistic parts (stacked 33 + 10 nH chip chokes, ideal choke, open) vs the cell without posts |
-| `extra_checks.py` | prints the README text numbers not covered by reproduce.py (rotated-channel phase, validations, supercell checks, Foster check, loss-free switches, panel leak, inductor choice, option A band edge) |
+| `extra_checks.py` | prints the TECHNICAL.md text numbers not covered by reproduce.py (rotated-channel phase, validations, supercell checks, Foster check, loss-free switches, panel leak, inductor choice, option A band edge) |
 | `macom_extract.py` | RF diode model numbers from MACOM's measured S-parameter files (download them yourself; see vendor/README.txt) |
 | `shape_exact.py` | copper-shape scoring at normal incidence: exact 6-port network, analytic spacer transfer, per-diode mismatch, mounting capacitance and diode C_T box as options |
 | `bias_an.py` | corner bias posts (ports 7-10): choke models (ideal, resistive, real chips, stacked chips) |
@@ -61,7 +61,7 @@ files are the earlier v3 shape (stub 0.3 mm, gap 0.644 mm, spacer 12 mm), kept f
 
 ## Reproduce the headline table
 
-`python reproduce.py` (top level) regenerates both README results tables (this shape and the v3 shape under the same rules), the
+`python reproduce.py` (top level) regenerates both results tables of TECHNICAL.md (this shape and the v3 shape under the same rules), the
 typical-parts rows, the lower-capacitance diode option, the network-vs-direct validation and the mesh check from `data/`.
 Figures: `python make_figs.py` (figs 1-3), `python array_demo.py` (fig 4), `python make_fig5.py` (fig 5), `python make_fig6.py` (fig 6).
 Individual scripts (run from `scripts/`; data paths are `../data/...`):
@@ -71,9 +71,9 @@ python via_an.py ../data/boss_d0.json 2.5      # 0 deg, via short vs open (ident
 python via_an.py ../data/boss_d45.json 2.5     # 45 deg along the edge
 python mp_pol_analyze.py ../data/v12_s4.json --direct ../data/vdir_s4.json   # network vs direct run (earlier design)
 python angle_an.py 45 0 2.25 --val             # 45-deg validation (earlier no-boss design)
-python real_all.py --srf 20 --L 2.0 --cp 0 0.02   # loss-only re-score (2-point 2.4 GHz files; the README table itself is reproduce.py)
+python real_all.py --srf 20 --L 2.0 --cp 0 0.02   # loss-only re-score (2-point 2.4 GHz files; the TECHNICAL.md table itself is reproduce.py)
 python sup_energy.py ../data/sup_t45.json      # supercell energy accounting + steered beam
-python bias_real.py ../data/bias_t45.json ../data/boss_d45.json 2.0 2.2   # bias posts with realistic parts, 45 deg (README bias section)
+python bias_real.py ../data/bias_t45.json ../data/boss_d45.json 2.0 2.2   # bias posts with realistic parts, 45 deg (TECHNICAL.md bias section)
 python bias_real.py ../data/bias_n.json ../data/boss_n.json 2.0 2.2       # same, 0 deg
 python bias_an.py ../data/bias_n.json 2.5        # simple choke models (open, ideal 47 nH, 1 kohm feed, 22 nH chip), 0 deg
 python bias_an.py ../data/bias_t45.json 2.5      # same, 45 deg
@@ -84,7 +84,7 @@ python via_an.py ../data/boss6_d45.json 2.5     # 6 mm boss
 python via_an.py ../data/boss_n.json 2.5        # mesh check, ideal inductor (compare bossfine_n.json)
 python via_an.py ../data/bossfine_n.json 2.5
 python via_an.py ../data/via_d45_g12.json 2.5   # full-height via (v3): via short vs open, the centre-charging notch
-python extra_checks.py                         # the remaining README numbers (rotated-channel phase, loss-free absorption, R_s trend, ...)
+python extra_checks.py                         # the remaining TECHNICAL.md numbers (rotated-channel phase, loss-free absorption, R_s trend, ...)
 python shape_exact.py ../data/explore/shape_ph_st23g170.json --pad 0.015 --padtol 0.002 --L 1.0:4.0:0.1 --G 9:13.5:0.25   # shape scoring (no boss, analytic spacer; suggests 2.6 nH, the full FEM with the boss prefers 2.3-2.4 nH: extra_checks 4g)
 python shape_exact.py ../data/explore/shape_ph_st23g210.json --pad 0 --padtol 0 --L 1.0:4.0:0.1 --G 9:13.5:0.25   # without mounting capacitance (~18 deg)
 python macom_extract.py                        # needs the MACOM .s2p files in vendor/macom/
@@ -102,9 +102,12 @@ python vendor_chip.py                          # this shape scored with the meas
 
 ## Release checks
 
-- Two independent reviews of the README (final verdict: ready after minor fixes, all applied) and a clean-room audit: a fresh copy of this
-  folder runs every command in this manifest, regenerates all figures byte-identical, and prints every computed number quoted in
-  README.md (datasheet values, dimensions and literature figures are quoted inputs).
+- Two independent reviews of the release README (final verdict: ready after minor fixes, all applied) and a clean-room audit: a fresh
+  copy of this folder runs every command in this manifest, regenerates all figures byte-identical, and prints every computed number
+  quoted in that README (datasheet values, dimensions and literature figures are quoted inputs). The release README is kept verbatim
+  as TECHNICAL.md; the archived release 1.0.0 (git tag v1.0.0 and the Zenodo deposit) holds it as README.md.
+- README.md is now a plain-language introduction added after release 1.0.0. Its numbers are quoted from TECHNICAL.md or printed by
+  `reproduce.py`, `array_demo.py` and `scripts/real_all.py`; it adds no new results.
 - Every reference opened at the primary source (two author/title errors in draft references were corrected before release).
 - No absolute paths, no personal names, no vendor data files in the package (vendor files are rebuilt from the user's own downloads).
 - The release shape was verified as full FEM runs at every angle (no analytic transfer behind any oblique or headline number).
