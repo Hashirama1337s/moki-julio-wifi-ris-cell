@@ -7,7 +7,7 @@ every simulated angle but one, with the strict phase target met only in part. No
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23165406.svg)](https://doi.org/10.5281/zenodo.23165406)
 
-Moki & Julio (AI-assisted)
+Moki & Julio
 
 **Status: simulation only (Palace 0.18.1 full-wave FEM + exact network algebra). Nothing has been built or measured.**
 Release 1.0.0. **Re-run** `python reproduce.py` (about a minute) · **Files** [MANIFEST.md](MANIFEST.md) · **Full
@@ -176,3 +176,5 @@ bit-phase analysis, the tilt fix, the panel demo, the method, the bias network, 
 art and references) is kept verbatim in **[TECHNICAL.md](TECHNICAL.md)**.
 
 Other projects: [github.com/Hashirama1337s](https://github.com/Hashirama1337s)
+
+*Prepared with AI assistance.*
