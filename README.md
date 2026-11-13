@@ -1,19 +1,16 @@
 # One switch, three Wi-Fi bands: a smart-mirror cell designed in simulation
 
-**A "smart mirror" for Wi-Fi is a panel of small cells, each with a switch that flips the wave it reflects. Such cells
-drift out of tune from one Wi-Fi band to the next. In a computer simulation we designed one 15 mm cell whose
-single on/off setting covers 2.4 GHz and the whole 5-7 GHz span of Wi-Fi 5, 6E and 7, within a 2 dB loss budget at
-every simulated angle but one, with the strict phase target met only in part. Nothing has been built or measured.**
+**One 15 mm "smart mirror" cell for Wi-Fi whose single on/off setting covers 2.4 GHz and the whole 5.15-7.125 GHz span, designed in simulation only: nothing has been built or measured.**
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23165406.svg)](https://doi.org/10.5281/zenodo.23165406)
+[![DOI 10.5281/zenodo.23165406](brand/doi.svg)](https://doi.org/10.5281/zenodo.23165406) ![Licence: text and data CC BY 4.0, code MIT](brand/licence.svg) [![Moki & Julio lab map](brand/lab.svg)](https://github.com/Hashirama1337s)
 
-Moki & Julio
+Moki & Julio · 2026 · version 1.0.0
 
 **Status: simulation only (Palace 0.18.1 full-wave FEM + exact network algebra). Nothing has been built or measured.**
 Release 1.0.0. **Re-run** `python reproduce.py` (about a minute) · **Files** [MANIFEST.md](MANIFEST.md) · **Full
 details** [TECHNICAL.md](TECHNICAL.md)
 
-## The story in a minute
+## In plain words
 
 Wi-Fi often has dead zones: behind a wall, around a corner. A reconfigurable intelligent surface (RIS) is a flat panel
 of small cells that can each flip the radio wave they reflect. Set the right pattern of flips and the panel steers Wi-Fi
@@ -33,9 +30,45 @@ The cell meets a 2 dB loss budget at every simulated angle except one: a wave ar
 diagonal. And the "bit" (the flip) meets the usual strict target only straight on, with typical parts, in the 5-7 GHz
 band. This is a design on a computer. Nobody has made or measured one.
 
-## Climb the ladder
+## At a glance
 
-### Step 1 - the idea (for anyone)
+*The exact claims, for specialists. Terms are explained in "How it works" and "Words you will meet".*
+
+- **Design.** Period 15 mm; ground with a raised 4 x 4 mm boss / 12.75 mm air spacer / RO4003C 0.508 mm / one copper
+  layer; 4 x MACOM MADP-000907-14020 PIN diodes, each in series with a 2.3 nH 0201 chip inductor with a high
+  self-resonance (16.5-20 GHz verified); designed for 0.015 pF mounting capacitance per diode.
+- **Results (worst case over the parts box, all cells in the same state).** Loss 0.81-0.91 dB straight on; at most
+  1.24 dB at 45 deg along the edges and at 30 deg along the diagonal (1.37 dB at 2.4 GHz); 45 deg along the diagonal
+  misses (2.21 / 2.28 dB). The steered beam changes by at most 0.12 dB because of the leak (array-factor check).
+- **Design rules.** The series inductor needs a high self-resonance (parts at 16.5-20 GHz pass, a 10 GHz part fails);
+  the land pattern must be designed in, because the bit phase is far more sensitive to mounting capacitance than the
+  loss is.
+- **Option.** A lower-capacitance diode (MACOM MA4AGFCP910): 1.9 nH gives the best phase (17.6-17.8 deg straight on,
+  typical parts); 2.5 nH meets 2 dB at every simulated angle in 5-7 GHz but misses the diagonal at 2.4 GHz (2.32 dB).
+- **Prior art.** The four-PIN mirror architecture is known (Zhang et al., IEEE TAP 2016; CN116598793A); the shared
+  tri-band bit (single layer, air spacer) and the series inductor as the third-band lever were not found ("not found" is
+  not proof); the boss and via are partly known. Live
+  patents exist in this family; anyone building hardware should check freedom to operate.
+
+Every table, figure, method step, open issue and reference: [TECHNICAL.md](TECHNICAL.md).
+
+## What we do not claim
+
+- **Nothing was built or measured.** Every number is from simulation: copper as a perfect conductor, diodes as lumped
+  circuits, land pads as one lumped capacitance; no land-pattern simulation, no foam spacer, no copper loss.
+- 45 deg along the cell diagonal misses 2 dB (2.21 dB at 2.4 GHz, 2.28 dB at 5-7 GHz). This is a wall-mount design;
+  on a ceiling that angle is common.
+- The strict 180 +- 20 deg bit is met only straight on with typical parts at 5-7 GHz (19.3 deg); worst case straight on
+  is 27-30 deg, and up to 46 / 70 deg at 45 deg tilt.
+- Headline numbers assume all cells in the same state. Neighbours in the opposite state were checked only on the
+  earlier v3 shape and only for one code; there, alternating neighbours raise absorption 1.8-2.9 times in 5-7 GHz.
+- The bias network is preliminary (earlier shape, 4 frequencies, diagonal plane not run). The mesh was checked only at
+  0 deg on the earlier shape; oblique incidence was not mesh-checked.
+- One frozen code steers different frequencies to different angles; the panel demo is an array factor only.
+
+## How it works
+
+### The idea
 
 ![The cell: one copper layer; four PIN diodes, each in series with a chip inductor, across the gaps in the diagonal arms](figures/fig1_geometry.png)
 
@@ -56,7 +89,7 @@ Three ideas make it work across bands: (1) the mirror-symmetric, polarisation-ro
 inductor in series with each diode, which opens the third band; (3) a small raised metal block (a "boss") under the
 centre with a short via (a metal-plated hole joining two layers), which removes a resonance that only appears when the wave comes in at a tilt.
 
-### Step 2 - how it works (for a curious student)
+### A worked example
 
 Simulating every combination of parts with the field solver would be slow. Instead, each copper pattern is simulated
 once, with a "port" at every diode site. After that, exact network algebra gives the response for any diode,
@@ -82,27 +115,7 @@ Straight on with typical parts, the error is 22.6 / 19.3 degrees: the 5-7 GHz ba
 2.4 GHz band and the worst-case parts do not. The diagonal miss is a geometric limit of a single copper layer: even
 loss-free switches leave a 93-degree error there in this shape.
 
-### Step 3 - the real thing (for specialists)
-
-- **Design.** Period 15 mm; ground with a raised 4 x 4 mm boss / 12.75 mm air spacer / RO4003C 0.508 mm / one copper
-  layer; 4 x MACOM MADP-000907-14020 PIN diodes, each in series with a 2.3 nH 0201 chip inductor with a high
-  self-resonance (16.5-20 GHz verified); designed for 0.015 pF mounting capacitance per diode.
-- **Results (worst case over the parts box, all cells in the same state).** Loss 0.81-0.91 dB straight on; at most
-  1.24 dB at 45 deg along the edges and at 30 deg along the diagonal (1.37 dB at 2.4 GHz); 45 deg along the diagonal
-  misses (2.21 / 2.28 dB). The steered beam changes by at most 0.12 dB because of the leak (array-factor check).
-- **Design rules.** The series inductor needs a high self-resonance (parts at 16.5-20 GHz pass, a 10 GHz part fails);
-  the land pattern must be designed in, because the bit phase is far more sensitive to mounting capacitance than the
-  loss is.
-- **Option.** A lower-capacitance diode (MACOM MA4AGFCP910): 1.9 nH gives the best phase (17.6-17.8 deg straight on,
-  typical parts); 2.5 nH meets 2 dB at every simulated angle in 5-7 GHz but misses the diagonal at 2.4 GHz (2.32 dB).
-- **Prior art.** The four-PIN mirror architecture is known (Zhang et al., IEEE TAP 2016; CN116598793A); the shared
-  tri-band bit (single layer, air spacer) and the series inductor as the third-band lever were not found ("not found" is
-  not proof); the boss and via are partly known. Live
-  patents exist in this family; anyone building hardware should check freedom to operate.
-
-Every table, figure, method step, open issue and reference: [TECHNICAL.md](TECHNICAL.md).
-
-## Use it as a tool
+## Reproduce and reuse
 
 Questions this lets you answer:
 
@@ -142,20 +155,6 @@ Straight on, the worst-case loss goes from 1.05 dB to 2.77 dB: the low-self-reso
 design rule says. `--L` takes several inductances and `--cp` several mounting capacitances (pF). The field-solver
 drivers (`palace_mp_pol.py`, `super_mp.py`) need Palace 0.18.1 on Linux and are listed in [MANIFEST.md](MANIFEST.md).
 
-## What we did not show
-
-- **Nothing was built or measured.** Every number is from simulation: copper as a perfect conductor, diodes as lumped
-  circuits, land pads as one lumped capacitance; no land-pattern simulation, no foam spacer, no copper loss.
-- 45 deg along the cell diagonal misses 2 dB (2.21 dB at 2.4 GHz, 2.28 dB at 5-7 GHz). This is a wall-mount design;
-  on a ceiling that angle is common.
-- The strict 180 +- 20 deg bit is met only straight on with typical parts at 5-7 GHz (19.3 deg); worst case straight on
-  is 27-30 deg, and up to 46 / 70 deg at 45 deg tilt.
-- Headline numbers assume all cells in the same state. Neighbours in the opposite state were checked only on the
-  earlier v3 shape and only for one code; there, alternating neighbours raise absorption 1.8-2.9 times in 5-7 GHz.
-- The bias network is preliminary (earlier shape, 4 frequencies, diagonal plane not run). The mesh was checked only at
-  0 deg on the earlier shape; oblique incidence was not mesh-checked.
-- One frozen code steers different frequencies to different angles; the panel demo is an array factor only.
-
 ## Words you will meet
 
 - **RIS (reconfigurable intelligent surface)** - a panel of switchable cells that steers reflected radio waves.
@@ -169,12 +168,20 @@ drivers (`palace_mp_pol.py`, `super_mp.py`) need Palace 0.18.1 on Linux and are 
 - **Network algebra** - treating the cell as a box with ports, so new parts can be plugged in by calculation.
 - **Array factor** - the beam pattern of a panel computed from each cell's response, ignoring cell-to-cell coupling.
 
-## For specialists: the original README
+## How to cite
 
-The complete previous README (design table, all results tables including the v3 comparison and the diode option, the
-bit-phase analysis, the tilt fix, the panel demo, the method, the bias network, the supercell study, open issues, prior
-art and references) is kept verbatim in **[TECHNICAL.md](TECHNICAL.md)**.
+```
+Moki & Julio (2026). One switch, three Wi-Fi bands: a 1-bit polarisation-rotating RIS cell (simulation study). Version 1.0.0. Zenodo. https://doi.org/10.5281/zenodo.23165406
+```
 
-Other projects: [github.com/Hashirama1337s](https://github.com/Hashirama1337s)
+The DOI always resolves to the newest archived version. Machine-readable: [CITATION.cff](CITATION.cff).
+Copyright (c) 2026 Moki & Julio. Design, text, figures and data: CC BY 4.0 (LICENSE; summary in LICENSE-docs-data.md). Code: MIT (LICENSE-CODE).
 
-*Prepared with AI assistance.*
+## Related projects
+
+- [kinect-v1-depth-levels](https://github.com/Hashirama1337s/kinect-v1-depth-levels): the Xbox 360 Kinect measured as an instrument
+- All projects: [the Moki & Julio lab map](https://github.com/Hashirama1337s)
+
+---
+
+*Prepared with AI assistance; what was checked, and by what, is stated above.*
