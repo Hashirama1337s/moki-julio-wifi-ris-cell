@@ -9,5 +9,5 @@ license:
   - CC-BY-4.0
   - MIT
 repository-code: "https://github.com/Hashirama1337s/moki-julio-wifi-ris-cell"
-keywords: [reconfigurable intelligent surface, RIS, reflectarray, Wi-Fi 6E, Wi-Fi 7, PIN diode, polarisation rotation, metasurface, Palace FEM]
+keywords: [reconfigurable intelligent surface, RIS, reflectarray, Wi-Fi 6E, Wi-Fi 7, PIN diode, polarisation rotation, metasurface, Palace FEM, smart surface, Wi-Fi, tri-band]
 doi: "10.5281/zenodo.23165406"

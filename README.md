@@ -16,9 +16,9 @@ Wi-Fi often has dead zones: behind a wall, around a corner. A reconfigurable int
 of small cells that can each flip the radio wave they reflect. Set the right pattern of flips and the panel steers Wi-Fi
 into the dead zone, with no radio or amplifier of its own.
 
-A picture that helps: **a stadium card stunt.** Each person holds a card that is one colour on one side and another on
+![](brand/icon-picture.svg) **The idea in one picture.** **A stadium card stunt.** Each person holds a card that is one colour on one side and another on
 the back; together the flips make a picture. Here each cell has two states, and the pattern of states shapes where the
-reflected wave goes. Where the picture breaks: the cards only need to look right at one moment, while a radio cell must
+reflected wave goes. **Where the picture breaks.** The cards only need to look right at one moment, while a radio cell must
 flip the wave the same way at every frequency it serves, and that is the hard part.
 
 The problem we started from was named in the PARISO paper (Sekharan et al. 2026): a cell's switched phase drifts between
