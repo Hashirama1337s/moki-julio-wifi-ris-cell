@@ -1,6 +1,6 @@
 # One switch, three Wi-Fi bands: a smart-mirror cell designed in simulation
 
-**One 15 mm "smart mirror" cell for Wi-Fi whose single on/off setting covers 2.4 GHz and the whole 5.15-7.125 GHz span, designed in simulation only: nothing has been built or measured.**
+**One 15 mm "smart mirror" cell for Wi-Fi whose single on/off setting serves 2.4 GHz and 5.15-7.125 GHz, meeting a 2 dB loss budget at every simulated angle but one, with the strict phase target met only in part: simulation only, nothing built or measured.**
 
 [![DOI 10.5281/zenodo.23165406](brand/doi.svg)](https://doi.org/10.5281/zenodo.23165406) ![Licence: text and data CC BY 4.0, code MIT](brand/licence.svg) [![Moki & Julio lab map](brand/lab.svg)](https://github.com/Hashirama1337s)
 
