@@ -4,10 +4,10 @@
 
 [![DOI 10.5281/zenodo.23165406](brand/doi.svg)](https://doi.org/10.5281/zenodo.23165406) ![Licence: text and data CC BY 4.0, code MIT](brand/licence.svg) [![Moki & Julio lab map](brand/lab.svg)](https://github.com/Hashirama1337s)
 
-Moki & Julio · 2026 · version 1.0.0
+Moki & Julio · 2026 · version 1.0.1
 
 **Status: simulation only (Palace 0.18.1 full-wave FEM + exact network algebra). Nothing has been built or measured.**
-Release 1.0.0. **Re-run** `python reproduce.py` (about a minute) · **Files** [MANIFEST.md](MANIFEST.md) · **Full
+Release 1.0.1. **Re-run** `python reproduce.py` (about a minute) · **Files** [MANIFEST.md](MANIFEST.md) · **Full
 details** [TECHNICAL.md](TECHNICAL.md)
 
 ## In plain words
@@ -23,12 +23,16 @@ flip the wave the same way at every frequency it serves, and that is the hard pa
 
 The problem we started from was named in the PARISO paper (Sekharan et al. 2026): a cell's switched phase drifts between
 the 2.4, 5 and 6 GHz Wi-Fi bands, so a pattern that works in one band fails in another. We designed one cell whose one
-switch state serves 2.4-2.4835 GHz and the full 5.15-7.125 GHz span. We did not find a published cell that covers both
-with one shared bit; "not found" is not proof.
+switch state serves 2.4-2.4835 GHz and the full 5.15-7.125 GHz span. We did not find a published reflecting cell that covers both with one shared bit; a transmitting two-layer cell
+that does (Guo et al. 2024) is listed in TECHNICAL.md; "not found" is not proof.
 
 The cell meets a 2 dB loss budget at every simulated angle except one: a wave arriving at 45 degrees along the cell's
 diagonal. And the "bit" (the flip) meets the usual strict target only straight on, with typical parts, in the 5-7 GHz
 band. This is a design on a computer. Nobody has made or measured one.
+
+![Simulated worst-case loss against frequency for five wave directions, with the Wi-Fi bands shaded and a 2 dB budget line](figures/loss_by_angle.svg)
+
+*Simulation only: worst-case loss of the designed cell against frequency, for five directions of the incoming wave, over the whole parts box (diode spread, inductor tolerance, mounting capacitance), with all cells in the same state. Shaded: the Wi-Fi bands 2.4-2.4835 GHz and 5.15-7.125 GHz; the frequency axis is cut between 2.6 and 5.0 GHz. Every direction stays under the 2 dB budget in both bands except 45 degrees along the cell diagonal (up to 2.21 dB at 2.4 GHz and 2.28 dB at 5-7 GHz). Three of the 2.4 GHz runs have only two frequencies (dots).*
 
 ## At a glance
 
@@ -65,6 +69,7 @@ Every table, figure, method step, open issue and reference: [TECHNICAL.md](TECHN
 - The bias network is preliminary (earlier shape, 4 frequencies, diagonal plane not run). The mesh was checked only at
   0 deg on the earlier shape; oblique incidence was not mesh-checked.
 - One frozen code steers different frequencies to different angles; the panel demo is an array factor only.
+- Correction 2026-11-17: the sentence "We did not find a published cell that covers both with one shared bit" was too broad; Guo et al. (Results in Physics 56, 107288, 2024) report a transmitting two-layer cell with one 1-bit state over 2.3-3.0 and 4.4-7.5 GHz. Our "not found" holds for reflecting cells only.
 
 ## How it works
 
@@ -114,6 +119,10 @@ A worked example from the release table (worst case over the whole "parts box": 
 Straight on with typical parts, the error is 22.6 / 19.3 degrees: the 5-7 GHz band meets the 20-degree target; the
 2.4 GHz band and the worst-case parts do not. The diagonal miss is a geometric limit of a single copper layer: even
 loss-free switches leave a 93-degree error there in this shape.
+
+![Simulated bit-phase error against frequency at normal incidence, typical parts and worst case, with a 20-degree target line](figures/bit_phase_error.svg)
+
+*Simulation only: how far the cell's switched phase is from a clean 180-degree flip, for a wave arriving straight on. With typical parts the error stays under the usual 20-degree target across the 5.15-7.125 GHz band (at most 19.3 degrees) but not across 2.4-2.4835 GHz (up to 22.6 degrees); over the whole parts box the worst case is 27.2 and 30.1 degrees. At a 45-degree tilt the errors are larger (up to 46 and 70 degrees; see TECHNICAL.md).*
 
 ## Reproduce and reuse
 
@@ -168,14 +177,49 @@ drivers (`palace_mp_pol.py`, `super_mp.py`) need Palace 0.18.1 on Linux and are 
 - **Network algebra** - treating the cell as a box with ports, so new parts can be plugged in by calculation.
 - **Array factor** - the beam pattern of a panel computed from each cell's response, ignoring cell-to-cell coupling.
 
+## Open doors
+
+What this simulation study leaves open, for anyone who wants to take the next step on a computer.
+
+- **A second copper layer for the hard angle and the strict bit.** With one copper layer, a wave arriving at 45 degrees
+  along the cell diagonal misses the 2 dB budget, and even loss-free switches leave a 93-degree phase error there; the strict
+  180 +- 20 degree bit is met only straight on, with typical parts, at 5-7 GHz. Our reading is that meeting it in the worst
+  case likely needs a second copper layer (stacked resonators), which we did not simulate. A published cell with patches in
+  two layers and four PIN diodes reaches a 1-bit phase over 2.3-3.0 and 4.4-7.5 GHz, but it transmits the wave rather than
+  reflecting it (Guo et al., Results in Physics 56, 107288, 2024). *Status:* UNTESTED observation from this work (not
+  simulated here). *Start here:* the open-issues table in [TECHNICAL.md](TECHNICAL.md), the shape scorer
+  `scripts/shape_exact.py` and the method of one field-solver run per copper pattern followed by exact network algebra for
+  the parts. *Ceiling:* a simulated reflecting cell that meets 2 dB and the strict bit at every angle in both Wi-Fi bands
+  with realistic parts.
+- **Checkerboard and longer steering codes.** Every headline number assumes all cells are in the same state, but a
+  steering panel mixes states. On an earlier shape, one alternating-stripe code raised absorption 1.8-2.9 times at
+  5-7 GHz, almost all of it in the diodes. The checkerboard and longer codes need four-cell simulations that did not fit
+  in 16 GB of memory, and nothing was repeated on the final shape. *Status:* UNTESTED observation from this work (not
+  simulated here). *Start here:* `scripts/super_mp.py`, `scripts/super_an.py`, `scripts/sup_energy.py` and the two-cell
+  data `data/sup_n.json`, `data/sup_t45.json`. *Ceiling:* panel-level loss figures for the final cell under the codes a
+  real steering panel uses.
+- **Simulating the solder pads.** The bit phase is tuned to 0.015 pF of mounting capacitance per diode and moves by 3-5
+  degrees for a change of 0.005 pF, yet the pads were modelled as one lumped capacitance. A full-wave simulation of the pad
+  layout (the "land pattern") is the next realism step we did not take. *Status:* UNTESTED observation from this work (not
+  simulated here). *Start here:* figure 6 (`make_fig6.py`) and the `--cp` option of `scripts/real_all.py`, which re-score
+  the cell for any mounting capacitance without a new field-solver run. *Ceiling:* a pad layout whose simulated capacitance
+  matches the value the cell was tuned for, removing one modelling gap.
+- **Cancelling the unflipped leak over a wide band.** A small part of each cell's reflection does not flip (the "leak") and
+  goes to the mirror direction. It is half the trace of the cell's reflection matrix, so rotating cells cannot cancel it;
+  fixed random delays or one-eighth-wavelength tile steps suppress it, but only over a narrow band. *Status:* UNTESTED
+  observation from this work (not studied here). *Start here:* `scripts/extra_checks.py` (check 4e) and `array_demo.py`.
+  *Ceiling:* a panel layout rule that pushes the leak's lobe down at 2.4 GHz and 5-7 GHz at the same time.
+
 ## How to cite
 
 ```
-Moki & Julio (2026). One switch, three Wi-Fi bands: a 1-bit polarisation-rotating RIS cell (simulation study). Version 1.0.0. Zenodo. https://doi.org/10.5281/zenodo.23165406
+Moki & Julio (2026). One switch, three Wi-Fi bands: a 1-bit polarisation-rotating RIS cell (simulation study). Version 1.0.1. Zenodo. https://doi.org/10.5281/zenodo.23165406
 ```
 
 The DOI always resolves to the newest archived version. Machine-readable: [CITATION.cff](CITATION.cff).
 Copyright (c) 2026 Moki & Julio. Design, text, figures and data: CC BY 4.0 (LICENSE; summary in LICENSE-docs-data.md). Code: MIT (LICENSE-CODE).
+
+Release note - v1.0.1: adds Open doors and figures; corrections dated 2026-11-17; no change to the certified results.
 
 ## Related projects
 

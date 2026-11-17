@@ -1,4 +1,4 @@
-# Manifest (release 1.0.0)
+# Manifest (release 1.0.1)
 
 ## Scripts (`scripts/`)
 
@@ -64,6 +64,7 @@ files are the earlier v3 shape (stub 0.3 mm, gap 0.644 mm, spacer 12 mm), kept f
 `python reproduce.py` (top level) regenerates both results tables of TECHNICAL.md (this shape and the v3 shape under the same rules), the
 typical-parts rows, the lower-capacitance diode option, the network-vs-direct validation and the mesh check from `data/`.
 Figures: `python make_figs.py` (figs 1-3), `python array_demo.py` (fig 4), `python make_fig5.py` (fig 5), `python make_fig6.py` (fig 6).
+`figures/make_figures.py` - README figures recomputed from `data/` with the reproduce.py settings (`python figures/make_figures.py .` writes `figures/loss_by_angle.svg` and `figures/bit_phase_error.svg`; captions and sources in `figures/CAPTIONS.md`).
 Individual scripts (run from `scripts/`; data paths are `../data/...`):
 
 ```
@@ -108,6 +109,8 @@ python vendor_chip.py                          # this shape scored with the meas
   as TECHNICAL.md; the archived release 1.0.0 (git tag v1.0.0 and the Zenodo deposit) holds it as README.md.
 - README.md is now a plain-language introduction added after release 1.0.0. Its numbers are quoted from TECHNICAL.md or printed by
   `reproduce.py`, `array_demo.py` and `scripts/real_all.py`; it adds no new results.
+- Release 1.0.1 (2026-11-17) adds Open doors and figures and carries dated corrections (prior-art row and reference for Guo et al. 2024;
+  "not found" now limited to reflecting cells) in README.md and TECHNICAL.md; no change to the simulated results.
 - Every reference opened at the primary source (two author/title errors in draft references were corrected before release).
 - No absolute paths, no personal names, no vendor data files in the package (vendor files are rebuilt from the user's own downloads).
 - The release shape was verified as full FEM runs at every angle (no analytic transfer behind any oblique or headline number).

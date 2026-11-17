@@ -2,7 +2,7 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23165406.svg)](https://doi.org/10.5281/zenodo.23165406)
 
-**Status: simulation only (Palace 0.18.1 full-wave FEM + exact network algebra). Nothing has been built or measured.** Release 1.0.0.
+**Status: simulation only (Palace 0.18.1 full-wave FEM + exact network algebra). Nothing has been built or measured.** Release 1.0.1.
 
 ## In plain words
 
@@ -12,8 +12,8 @@ reflect, so the whole panel can steer Wi-Fi into a dead zone without a radio or 
 This study started from the tri-band phase-stability problem named in the PARISO paper (Sekharan et al. 2026): a RIS cell's switched phase
 drifts between the 2.4 GHz, 5 GHz and 6 GHz Wi-Fi bands, so a code that works in one band fails in another. It designs **one 15 mm cell whose
 single 1-bit switch state covers 2.4-2.4835 GHz and the full 5.15-7.125 GHz span of Wi-Fi 5/6E/7**, within 2 dB of loss at every
-simulated angle except 45 deg along the cell diagonal, and with the bit phase only partly meeting the usual target (details below). We did not find a published cell
-that covers both with one shared bit (closest work below).
+simulated angle except 45 deg along the cell diagonal, and with the bit phase only partly meeting the usual target (details below). We did not find a published reflecting cell
+that covers both with one shared bit (closest work below, including a transmitting two-layer cell that does).
 
 - **One shared switch state, both bands, realistic parts.** Worst-case loss (defined below; it includes the unsteered leak) over the full parts box (diode spread, inductor tolerance,
   0.013-0.017 pF mounting capacitance; all cells in the same state, opposite neighbours in the supercell section): **0.81-0.91 dB straight on**, at most 1.24 dB tilted to 45 deg along the cell edges and to 30 deg
@@ -283,12 +283,14 @@ Data: `data/sup_n.json`, `data/sup_t45.json`. Scripts: `super_mp.py`, `super_an.
 
 | claim | status | closest prior work |
 |---|---|---|
-| one shared 1-bit state over 2.4-2.4835 and 5.15-7.125 GHz (single layer, air spacer) | not found; the 4-PIN mirror architecture itself is known (pending application CN116598793A, Hunan University, 2023: 14.1-18.3 and 19.7-22.9 GHz, multilayer) | Z. Iqbal et al., *Telecom* 6, 65 (2025): mirror 4-PIN polarisation-rotation cell over 3.83-15.06 GHz, vias, no 2.4 GHz; Ding et al., ACES-China 2025: independent 2.4 and 5 GHz bits with separate diodes (8.63 % and 4.60 % bandwidth) |
+| one shared 1-bit state over 2.4-2.4835 and 5.15-7.125 GHz (single layer, air spacer) | not found; the 4-PIN mirror architecture itself is known (pending application CN116598793A, Hunan University, 2023: 14.1-18.3 and 19.7-22.9 GHz, multilayer) | Z. Iqbal et al., *Telecom* 6, 65 (2025): mirror 4-PIN polarisation-rotation cell over 3.83-15.06 GHz, vias, no 2.4 GHz; Ding et al., ACES-China 2025: independent 2.4 and 5 GHz bits with separate diodes (8.63 % and 4.60 % bandwidth); Guo et al., *Results in Physics* 56, 107288 (2024): a transmitting (not reflecting) two-layer cell with four PIN diodes and a 1-bit phase with 90 deg polarisation rotation over 2.3-3.0 and 4.4-7.5 GHz (abstract), which spans both Wi-Fi bands |
 | series chip inductor at each diode as the third-band lever | not found | package inductance inside diode models and shunt bias chokes are routine |
 | raised ground boss + short via against the oblique centre-charging mode | partly known | centre vias / control tubes (Iqbal 2025; CN116598793A); mushroom vias whose length sets the resonance (US9531079B2, NTT Docomo); coupled current components on crossed-dipole arrays (Pelton and Munk 1979); the raised block used against this mode was not found |
 | bit phase limited by mounting capacitance; non-Foster argument against a series-part fix; leak = trace/2, rotation-invariant | partly known (each ingredient is textbook: PIN parasitics, Foster's theorem, Jones-matrix invariants); the packaged results for this cell are this study's | Fathnan and Powell, *Opt. Express* 26, 29440 (2018) (Foster-type bandwidth limits of printed-circuit metasurfaces); Achouri and Martin, arXiv:2008.05776 (symmetry classification of polarisation-converting metasurfaces) |
 | mirror-locked 180 deg bit | known | Zhang et al., IEEE TAP 2016 (four-PIN polarisation-turning cell); Iqbal 2025; related two-diode polarisation-rotation bit: Xu et al., *Opt. Express* 2025 |
 | one multiport run + exact algebra | partly known | EM-circuit co-simulation is standard; the spacer transfer and La-Cp-C0 read-out were not found |
+
+Correction 2026-11-17: the sentence "We did not find a published cell that covers both with one shared bit" was too broad; Guo et al. (Results in Physics 56, 107288, 2024) report a transmitting two-layer cell with one 1-bit state over 2.3-3.0 and 4.4-7.5 GHz. Our "not found" holds for reflecting cells only.
 
 **Patents.** Live patents and applications exist in the wider family of PIN polarisation-rotation and centre-via cells (e.g. CN116598793A,
 CN119093023B, CN114421170B, CN118645815A, US11695214B2, US9531079B2). This open simulation release is intended as a defensive publication;
@@ -300,6 +302,7 @@ anyone building hardware should check freedom to operate (this is not legal advi
 - W. Ding, T. Chen, Z. Pan, H. Yu, "Dual-Band Reconfigurable Reflectarray Using 1-bit PIN Diode Switches," ACES-China 2025, pp. 1-4, doi:10.23919/ACES-China66523.2025.11333168
 - M.-T. Zhang, S. Gao, Y.-C. Jiao, J.-X. Wan, B.-N. Tian, C.-B. Wu, A. Farrall, "Design of Novel Reconfigurable Reflectarrays With Single-Bit Phase Resolution for Ku-Band Satellite Antenna Applications," IEEE Trans. Antennas Propag. 64(5), 1634-1641 (2016), doi:10.1109/TAP.2016.2535166
 - H. Xu, D. Guan et al., "Broadband multifunctional scattering control based on reconfigurable polarization conversion metasurface," *Opt. Express* 33(23), 49780-49793 (2025), doi:10.1364/OE.578851
+- Z. Guo, Y. Zhou, H. Yang, S. Li, T. Li, X. Cao, "Dual-band transmission polarization conversion metasurface and its reconfigurable-phase design," *Results in Physics* 56, 107288 (2024), doi:10.1016/j.rinp.2023.107288
 - E. L. Pelton, B. A. Munk, "Scattering from periodic arrays of crossed dipoles," IEEE Trans. Antennas Propag. 27(3), 323-330 (1979), doi:10.1109/TAP.1979.1142088
 - K. N. Rozanov, "Ultimate thickness to bandwidth ratio of radar absorbers," IEEE Trans. Antennas Propag. 48(8), 1230-1234 (2000), doi:10.1109/8.884491
 - M.-A. Milon, D. Cadoret, R. Gillard, H. Legay, "'Surrounded-element' approach for the simulation of reflectarray radiating cells," IET Microw. Antennas Propag. 1(2), 289-293 (2007), doi:10.1049/iet-map:20050291

@@ -3,7 +3,7 @@ message: "If you use this design, data or code, please cite it as below."
 title: "One switch, three Wi-Fi bands: a 1-bit polarisation-rotating RIS cell (simulation study)"
 authors:
   - name: "Moki & Julio"
-version: "1.0.0"
+version: "1.0.1"
 date-released: "2026-10-05"
 license:
   - CC-BY-4.0
